@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+        <title>Playlists</title>
+
+    </head>
+
+    <body>
+
+        <div class="container">
+            <div class="row">
+                <h1>Random Playlists! <small><sub>beta</sub></small></h1>
+            </div>
+
+            <div class="row">
+                <h2>1. Starting data</h2>
+                <div class="col-md-6">
+
+                    <blockquote>
+                        <p>
+                            Type some artists you're interested in (one per line)...
+                        </p>
+                    </blockquote>
+
+
+                    <form>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Artist Seed Set</label>
+                        <textarea class="form-control" rows="10" placeholder="The Who" id="seedarea"></textarea>
+                      </div>
+                    </form>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <blockquote>
+                        <p>
+                            ...or use these buttons to quickly add several artists.
+                        </p>
+                    </blockquote>
+
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Your music</label>
+
+                            <div class="col-sm-9">
+                                <button class="btn btn-default">Top artists (recent)</button>
+                                <button class="btn btn-default">Top artists (all time)</button>
+                                <button class="btn btn-default">Followed artists</button>
+                                <button class="btn btn-default">Artists in library</button>
+                                <button class="btn btn-default">Recommended for you</button>
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">General</label>
+
+                            <div class="col-sm-9">
+                                <button class="btn btn-default" type="button" onclick="editor()">Editor's picks</button>
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Related to</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="relartists" placeholder="The Who">
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-default btn-block" type="button" onclick="related_search()">Add</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Genre</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="genresearch" placeholder="rock">
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-default btn-block" type="button" onclick="genre_search()">Add</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Years</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="yearssearch" placeholder="1970-1979">
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-default btn-block" type="button" onclick="years_search()">Add</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Clear</label>
+                            <div class="col-sm-offset-7 col-sm-2">
+                                <button class="btn btn-danger btn-block">Clear</button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                <h2>2. Parameters</h2>
+
+                <blockquote>
+                    <p>
+                        How long do you want your list to be, and how much should it deviate from the artists you listed above?
+                    </p>
+                </blockquote>
+
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Number of tracks</label>
+
+                        <div class="col-sm-1">
+                            <input type="text" class="form-control" id="plsize" value="50">
+                        </div>
+
+                        <div class="col-sm-6">
+                            <button class="btn btn-default" type="button" onclick="pllen(20)">Short</button>
+                            <button class="btn btn-default" type="button" onclick="pllen(50)">Medium</button>
+                            <button class="btn btn-default" type="button" onclick="pllen(100)">Long</button>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Max fuzziness</label>
+
+                        <div class="col-sm-1">
+                            <input type="text" class="form-control" id="plfuzz" value="2">
+                        </div>
+
+                        <div class="col-sm-6">
+                            <button class="btn btn-default" type="button" onclick="fuzz(1)">Listed only</button>
+                            <button class="btn btn-default" type="button" onclick="fuzz(2)">Some variation</button>
+                            <button class="btn btn-default" type="button" onclick="fuzz(5)">More variation</button>
+                            <button class="btn btn-default" type="button" onclick="fuzz(10000)">NO LIMIT</button>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="row">
+                <h2>3. Make the list</h2>
+
+                <blockquote>
+                    <p>
+                        That's it! Click the button to make the list, and don't forget to save it.
+                    </p>
+                </blockquote>
+
+
+                <p>
+                    <button class="btn btn-primary" type="button" id="makebtn" onclick="make_it()">Make it</button>
+                    <button class="btn btn-primary" type="button" id="savebtn" disabled="true">Save it</button>
+
+                    <button class="btn btn-primary" type="button" id="rawbtn" disabled="true" onclick="rawdata()">Raw data</button>
+
+                    <i id="cog" class="fa fa-cog fa-spin" style="font-size:24px; visibility:hidden"></i>
+                    <span class="sr-only">Loading...</span>
+                </p>
+
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%" id="plbar">
+                        0%
+                    </div>
+                </div>
+
+                <input type="text" class="form-control" id="plname" placeholder="Playlist name">
+
+                <textarea class="form-control hidden" rows="10" placeholder="Raw data" id="rawarea"></textarea>
+
+            </div>
+
+            <div class="row">
+                <table class="table table-striped" id="output_table">
+                    <theader>
+                        <th>#</th>
+                        <th>Artist</th>
+                        <th>Album</th>
+                        <th>Track</th>
+                    </theader>
+                </table>
+
+            </div>
+
+        </div> <!-- container -->
+
+
+        <!-- jQuery / bootstrap stuff -->
+
+        <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+
+        <script src="editor.js" type="text/javascript"></script>
+        <script src="playlist.js" type="text/javascript"></script>
+
+    </body>
+
+</html>
