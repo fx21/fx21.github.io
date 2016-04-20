@@ -15,6 +15,12 @@
         <div class="container">
             <div class="row">
                 <h1>Random Playlists! <small><sub>beta</sub></small></h1>
+
+                <p>
+                    <button class="btn btn-primary" type="button" onclick="do_sign_in()" id="signinbtn">Sign in to Spotify</button>
+                    Signing in lets you access your music, save the playlists, and generate them faster. No data is saved.
+                </p>
+
             </div>
 
             <div class="row">
@@ -27,11 +33,10 @@
                         </p>
                     </blockquote>
 
-
-                    <form>
+                    <form onsubmit="return false">
                       <div class="form-group">
                         <label for="exampleInputEmail1">Artist Seed Set</label>
-                        <textarea class="form-control" rows="10" placeholder="The Who" id="seedarea"></textarea>
+                        <textarea class="form-control" rows="10" placeholder="The Who" id="seedarea" onchange="update_seed_source()"></textarea>
                       </div>
                     </form>
 
@@ -45,16 +50,16 @@
                         </p>
                     </blockquote>
 
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" onsubmit="return false">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Your music</label>
 
                             <div class="col-sm-9">
-                                <button class="btn btn-default">Top artists (recent)</button>
-                                <button class="btn btn-default">Top artists (all time)</button>
-                                <button class="btn btn-default">Followed artists</button>
-                                <button class="btn btn-default">Artists in library</button>
-                                <button class="btn btn-default">Recommended for you</button>
+                                <button class="btn btn-default" type="button" onclick="user_top_artists('short_term')">Top artists (4 weeks)</button>
+                                <button class="btn btn-default" type="button" onclick="user_top_artists('medium_term')">Top artists (6 months)</button>
+                                <button class="btn btn-default" type="button" onclick="user_top_artists('long_term')">Top artists (several years)</button>
+                                <button class="btn btn-default" type="button" onclick="user_followed_artists()">Followed artists</button>
+                                <!--<button class="btn btn-default" type="button">Artists in library</button>-->
                             </div>
 
 
@@ -103,7 +108,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Clear</label>
                             <div class="col-sm-offset-7 col-sm-2">
-                                <button class="btn btn-danger btn-block">Clear</button>
+                                <button class="btn btn-danger btn-block" type="button" onclick="clear_list()">Clear</button>
                             </div>
                         </div>
 
@@ -122,7 +127,7 @@
                     </p>
                 </blockquote>
 
-                <form class="form-horizontal">
+                <form class="form-horizontal" onsubmit="return false">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Number of tracks</label>
 
@@ -141,7 +146,7 @@
                         <label class="col-sm-2 control-label">Max fuzziness</label>
 
                         <div class="col-sm-1">
-                            <input type="text" class="form-control" id="plfuzz" value="2">
+                            <input type="text" class="form-control" id="plfuzz" value="2" onchange="update_fuzziness()">
                         </div>
 
                         <div class="col-sm-6">
@@ -168,9 +173,11 @@
 
                 <p>
                     <button class="btn btn-primary" type="button" id="makebtn" onclick="make_it()">Make it</button>
-                    <button class="btn btn-primary" type="button" id="savebtn" disabled="true">Save it</button>
+                    <button class="btn btn-primary" type="button" id="savebtn" disabled="true" onclick="save_playlist()">Save it</button>
 
                     <button class="btn btn-primary" type="button" id="rawbtn" disabled="true" onclick="rawdata()">Raw data</button>
+                    <button class="btn btn-warning" type="button" id="newlistbtn" onclick="">Make another one</button>
+                    <button class="btn btn-danger" type="button" id="reloadbtn" onclick="start_over()">Clear everything and start over</button>
 
                     <i id="cog" class="fa fa-cog fa-spin" style="font-size:24px; visibility:hidden"></i>
                     <span class="sr-only">Loading...</span>
@@ -182,9 +189,10 @@
                     </div>
                 </div>
 
-                <input type="text" class="form-control" id="plname" placeholder="Playlist name">
+                <label class="control-label">Playlist name</label>
+                <input type="text" class="form-control" id="plname" value="Generated playlist">
 
-                <textarea class="form-control hidden" rows="10" placeholder="Raw data" id="rawarea"></textarea>
+                <textarea class="form-control hidden" rows="10" placeholder="Raw data" id="rawarea" readonly></textarea>
 
             </div>
 
@@ -220,6 +228,7 @@
 
         <script src="editor.js" type="text/javascript"></script>
         <script src="playlist.js" type="text/javascript"></script>
+        <script src="auth.js" type="text/javascript"></script>
 
     </body>
 
