@@ -326,8 +326,6 @@ current_step = -1
 
 generated_list = []
 
-use_market = "SE"
-
 global_x = null
 
 function run_error_callback(x, status, error) {
@@ -448,6 +446,20 @@ function chain_track_callback(response) {
 
 }
 
+function get_market() {
+    return $("p.market_p select").val()
+}
+
+function add_market(data) {
+
+    use_market = get_market()
+
+    if (use_market != "AA") {
+        data["market"] = use_market
+    }
+
+}
+
 function chain_album_callback(response) {
 
     a = response["items"]
@@ -467,12 +479,13 @@ function chain_album_callback(response) {
     found_album_name = random_item["name"]
     found_album_url = random_item["external_urls"]["spotify"]
 
+    use_data = {}
+    add_market(use_data)
+
     $.ajax({
         url: 'https://api.spotify.com/v1/albums/'+id+'/tracks',
         beforeSend: add_token_header,
-        data: {
-            market: use_market
-        },
+        data: use_data,
         success: chain_track_callback,
         error: run_error_callback
     });
@@ -487,13 +500,13 @@ function chain_artist(a) {
 
     current_artist_id = id
 
+    use_data = {type:"album"}
+    add_market(use_data)
+
     $.ajax({
         url: 'https://api.spotify.com/v1/artists/'+id+'/albums',
         beforeSend: add_token_header,
-        data: {
-            type: "album",
-            market: use_market
-        },
+        data: use_data,
         success: chain_album_callback,
         error: run_error_callback
     });

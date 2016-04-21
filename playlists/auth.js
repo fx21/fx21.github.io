@@ -69,8 +69,7 @@ function validate_token_callback(response) {
     user_id = response["id"]
     user_country = response["country"]
 
-    // this needs to be exposed graphically somehow
-    use_market = user_country
+    $("p.market_p select").val(user_country)
 
     $("#signinbtn").addClass("btn-success").prop("disabled",true).text('Signed in as '+user_id)
 
