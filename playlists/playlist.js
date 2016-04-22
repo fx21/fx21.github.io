@@ -256,7 +256,8 @@ function searchGenre(query) {
         beforeSend: add_token_header,
         data: {
             q: query,
-            type: 'artist'
+            type: 'artist',
+            limit: 50
         },
         success: search_genre_callback
     });
@@ -479,7 +480,7 @@ function chain_album_callback(response) {
     found_album_name = random_item["name"]
     found_album_url = random_item["external_urls"]["spotify"]
 
-    use_data = {}
+    use_data = {limit:50}
     add_market(use_data)
 
     $.ajax({
@@ -500,7 +501,7 @@ function chain_artist(a) {
 
     current_artist_id = id
 
-    use_data = {type:"album"}
+    use_data = {type:"album", limit:50}
     add_market(use_data)
 
     $.ajax({
