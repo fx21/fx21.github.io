@@ -501,7 +501,7 @@ function chain_artist(a) {
 
     current_artist_id = id
 
-    use_data = {type:"album", limit:50}
+    use_data = {album_type:"album,single,compilation", limit:50}
     add_market(use_data)
 
     $.ajax({
@@ -578,6 +578,14 @@ function make_it() {
 
     plsize = parseInt($("#plsize").val())
     plfuzz = parseInt($("#plfuzz").val())
+
+    if (isNaN(plsize)) {
+        plsize = 50
+    }
+
+    if (isNaN(plfuzz)) {
+        plfuzz = 2
+    }
 
     num_runs = Math.max(plsize/plfuzz, 1) //make x runs with fuzz number of jumps, at least 1
     max_steps = Math.min(plsize, plfuzz) //however, don't go longer than the number of tracks (probably checked later as well)
