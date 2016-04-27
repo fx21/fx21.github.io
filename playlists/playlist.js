@@ -348,7 +348,7 @@ function run_error_callback(x, status, error) {
     $("#rawbtn").prop("disabled",false)
     $("#cog").css("visibility","hidden")
 
-    $("#plbar").attr('aria-valuenow', 100).css('width','100%').html('unknown error').toggleClass('active').toggleClass('progress-bar-danger')
+    $("#plbar").attr('aria-valuenow', 100).css('width','100%').html('unknown error ('+status+' '+error+')').toggleClass('active').toggleClass('progress-bar-danger')
 
     global_x = x
 
