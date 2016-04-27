@@ -516,6 +516,17 @@ function chain_artist(a) {
 
 function chain_artist_callback(response) {
 
+    artists = response["artists"]["items"]
+
+    if (artists.length == 0) {
+
+        $("#cog").css("visibility","hidden")
+        $("#plbar").attr('aria-valuenow', 100).css('width','100%').html('"'+current_search_artist+'" matched no artists').toggleClass('active').toggleClass('progress-bar-danger')
+
+        return
+
+    }
+
     a = response["artists"]["items"][0]
 
     chain_artist(a)
@@ -529,9 +540,12 @@ function pick_random_from_seed_set() {
 
 }
 
+current_search_artist = null
+
 function start_chain() {
 
     starting_point = pick_random_from_seed_set()
+    current_search_artist = starting_point
 
     current_step = 0
     current_run++
