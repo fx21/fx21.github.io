@@ -81,6 +81,13 @@ function chain_related_callback(response) {
     a = response["artists"]
     len = a.length
 
+    if (len == 0) {
+
+        progressbar_error("Found no related artists to "+found_artist_name)
+        return
+
+    }
+
     random_item = a[Math.floor(len*Math.random())]
 
     chain_artist(random_item)
