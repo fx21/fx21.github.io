@@ -24,6 +24,17 @@ generated_list = []
 
 global_x = null
 
+function progressbar_error(message) {
+
+    $("#savebtn").prop("disabled",false)
+    $("#rawbtn").prop("disabled",false)
+    $("#cog").css("visibility","hidden")
+
+    $("#plbar").attr('aria-valuenow', 100).css('width','100%').html(message).removeClass('active').addClass('progress-bar-danger')
+
+
+}
+
 function run_error_callback(x, status, error) {
 
     // 429, too many requests, is handled by sleeping for a while and then jumping back in
@@ -39,15 +50,19 @@ function run_error_callback(x, status, error) {
 
     // general unhandled errors, display something and try to work around it in the future
 
-    $("#savebtn").prop("disabled",false)
-    $("#rawbtn").prop("disabled",false)
-    $("#cog").css("visibility","hidden")
+    //$("#savebtn").prop("disabled",false)
+    //$("#rawbtn").prop("disabled",false)
+    //$("#cog").css("visibility","hidden")
 
-    $("#plbar").attr('aria-valuenow', 100).css('width','100%').html('unknown error ('+status+' '+error+')').toggleClass('active').toggleClass('progress-bar-danger')
+    //$("#plbar").attr('aria-valuenow', 100).css('width','100%').html('unknown error ('+status+' '+error+')').toggleClass('active').toggleClass('progress-bar-danger')
+
+    progressbar_error('unknown error ('+status+' '+error+')')
 
     global_x = x
 
-    $("#plbar").html(x.responseJSON.error.status+' '+x.responseJSON.error.message)
+    //$("#plbar").html(x.responseJSON.error.status+' '+x.responseJSON.error.message)
+
+    progressbar_error(x.responseJSON.error.status+' '+x.responseJSON.error.message)
 
 }
 
@@ -215,8 +230,10 @@ function chain_artist_callback(response) {
 
     if (artists.length == 0) {
 
-        $("#cog").css("visibility","hidden")
-        $("#plbar").attr('aria-valuenow', 100).css('width','100%').html('"'+current_search_artist+'" matched no artists').toggleClass('active').toggleClass('progress-bar-danger')
+        //$("#cog").css("visibility","hidden")
+        //$("#plbar").attr('aria-valuenow', 100).css('width','100%').html('"'+current_search_artist+'" matched no artists').toggleClass('active').toggleClass('progress-bar-danger')
+
+        progressbar_error('"'+current_search_artist+'" matched no artists')
 
         return
 

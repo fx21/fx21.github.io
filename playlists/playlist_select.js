@@ -63,7 +63,7 @@ function playlist_select_callback(response) {
 
     })
 
-    $("#playlistModalCog").addClass("hide")
+    $("#playlistModalCog").addClass("hidden")
 
 }
 
