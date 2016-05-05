@@ -59,7 +59,9 @@ function playlist_select_callback(response) {
 
         href = a["href"]
 
-        $("#playlistsModalTable").append('<tr><td><img width="60" height="60" src="'+img_url+'"></td><td>'+name+' <br><strong>'+num+' tracks</strong></td><td><button type="button" class="btn btn-primary" onclick="add_selected_playlist(\''+href+'\',\''+name+'\')" data-toggle="modal" data-target="#playlistSelectModal">Select</button></td></tr>')
+        escaped_name = name.split('"').join('').split("'").join('')
+
+        $("#playlistsModalTable").append('<tr><td><img width="60" height="60" src="'+img_url+'"></td><td>'+name+' <br><strong>'+num+' tracks</strong></td><td><button type="button" class="btn btn-primary" onclick="add_selected_playlist(\''+href+'\',\''+escaped_name+'\')" data-toggle="modal" data-target="#playlistSelectModal">Select</button></td></tr>')
 
     })
 
