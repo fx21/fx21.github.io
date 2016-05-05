@@ -1,4 +1,44 @@
 
+function playlist_select_select_callback(response) {
+
+    added_already = []
+
+    response["tracks"]["items"].forEach(function(a) {
+
+        a["track"]["artists"].forEach(function(b) {
+
+            if (!(b["id"] in added_already)) {
+
+                add_to_seed(b["name"])
+                added_already[b["id"]] = b["name"]
+            }
+
+        })
+
+    })
+
+}
+
+function playlist_select_select_error() {
+
+}
+
+function add_selected_playlist(href,name) {
+
+    update_source_name('artists in playlist "'+name+'"')
+
+    $.ajax({
+        url: href,
+        beforeSend: add_token_header,
+        data: {
+            fields:"tracks(items(track(artists(name,id))))"
+        },
+        success: playlist_select_select_callback,
+        error: playlist_select_select_error
+    });
+
+}
+
 function playlist_select_callback(response) {
 
     response["items"].forEach(function(a) {
@@ -17,9 +57,9 @@ function playlist_select_callback(response) {
 
         num = a["tracks"]["total"]
 
-        id = a["id"]
+        href = a["href"]
 
-        $("#playlistsModalTable").append('<tr><td><img width="60" height="60" src="'+img_url+'"></td><td>'+name+' <br><strong>'+num+' tracks</strong></td><td><button type="button" class="btn btn-primary" onclick="add_selected_playlist(\''+id+'\')">Select</button></td></tr>')
+        $("#playlistsModalTable").append('<tr><td><img width="60" height="60" src="'+img_url+'"></td><td>'+name+' <br><strong>'+num+' tracks</strong></td><td><button type="button" class="btn btn-primary" onclick="add_selected_playlist(\''+href+'\',\''+name+'\')" data-toggle="modal" data-target="#playlistSelectModal">Select</button></td></tr>')
 
     })
 
@@ -38,7 +78,7 @@ function popup_playlist_select() {
         $("#playlistsModalTable").html('')
 
         $.ajax({
-            url: 'https://api.spotify.com/v1/users/'+user_id+'/playlists',
+            url: 'https://api.spotify.com/v1/me/playlists',
             beforeSend: add_token_header,
             data: {
                 limit: 50

@@ -54,7 +54,7 @@ function load_token() {
 function do_sign_in() {
 
     base_url = "http://fx21.github.io/playlists/"
-    scope = "user-read-private user-top-read user-follow-read playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative"
+    scope = "user-read-private user-top-read user-follow-read playlist-modify-public playlist-modify-private playlist-read-private"
 
     //<a href='https://accounts.spotify.com/authorize/?client_id=6c687a3e2125432db6b91368aa48cad0&response_type=token&redirect_uri=http%3A%2F%2Ffx21.github.io%2Fplaylists%2F&scope=user-read-private%20user-top-read&state=34fFs29kd09' target='_blank'>Sign in</a>
 
