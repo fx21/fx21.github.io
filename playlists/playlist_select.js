@@ -46,11 +46,10 @@ function playlist_select_callback(response) {
         name = a["name"]
 
         img = a["images"]
-        img_2 = img[2]
-        img_url = ""
+        img_url = "album.png"
 
-        if (typeof img_2 != "undefined") {
-            img_url = img_2["url"]
+        if (img.length > 2) {
+            img_url = img[2]["url"]
         } else if (img.length > 0) {
             img_url = img[0]["url"]
         }
