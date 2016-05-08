@@ -73,6 +73,13 @@ function playlist_select_error() {
 
 }
 
+function display_empty_playlist_select() {
+
+    $("#playlistsModalTable").append('<tr><td>You must be signed in to access your playlists.</td></tr>')
+    $("#playlistModalCog").addClass("hidden")
+
+}
+
 function popup_playlist_select() {
 
     if (token_valid()) {
@@ -89,6 +96,10 @@ function popup_playlist_select() {
             error: playlist_select_error
         });
 
+
+    } else {
+
+        display_empty_playlist_select()
 
     }
 
