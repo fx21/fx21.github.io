@@ -35,6 +35,37 @@ function progressbar_error(message) {
 
 }
 
+function new_chain_or_quit() {
+
+    //increment the track index so we don't run the risk of looping forever
+
+    current_track_index++
+    current_step++
+
+    update_progress()
+
+    if (current_track_index > current_max_tracks) {
+
+        //we've reached the limit, quit
+
+        quit_playlist()
+
+    } else {
+
+        start_chain()
+
+    }
+
+}
+
+function wait_reset_chain(message) {
+
+    $("#plbar").html(message).addClass('progress-bar-warning')
+
+    setTimeout("new_chain_or_quit()", 2000)
+
+}
+
 function run_error_callback(x, status, error) {
 
     // 429, too many requests, is handled by sleeping for a while and then jumping back in
@@ -83,7 +114,9 @@ function chain_related_callback(response) {
 
     if (len == 0) {
 
-        progressbar_error("Found no related artists to "+found_artist_name)
+        wait_reset_chain("Found no related artists to "+found_artist_name)
+        //progressbar_error("Found no related artists to "+found_artist_name)
+
         return
 
     }
@@ -240,7 +273,8 @@ function chain_artist_callback(response) {
         //$("#cog").css("visibility","hidden")
         //$("#plbar").attr('aria-valuenow', 100).css('width','100%').html('"'+current_search_artist+'" matched no artists').toggleClass('active').toggleClass('progress-bar-danger')
 
-        progressbar_error('"'+current_search_artist+'" matched no artists')
+        wait_reset_chain('"'+current_search_artist+'" matched no artists')
+        //progressbar_error('"'+current_search_artist+'" matched no artists')
 
         return
 
