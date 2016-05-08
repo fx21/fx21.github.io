@@ -75,7 +75,7 @@ function playlist_select_error() {
 
 function display_empty_playlist_select() {
 
-    $("#playlistsModalTable").append('<tr><td>You must be signed in to access your playlists.</td></tr>')
+    $("#playlistsModalTable").html('<tr><td>You must be signed in to access your playlists.</td></tr>')
     $("#playlistModalCog").addClass("hidden")
 
 }
