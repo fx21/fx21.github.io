@@ -236,7 +236,7 @@ function related_search() {
 
     searchArtist($("#relartists").val())
 
-    update_source_name($("#relartists").val())
+    update_source_name($("#relartists").val()+"+related")
 
 }
 
