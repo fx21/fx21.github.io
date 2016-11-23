@@ -1,0 +1,66 @@
+
+th {
+
+    background-color: black;
+    color: white;
+    text-align: center;
+
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+}
+
+td.color-cell {
+
+    cursor: pointer;
+    text-align: center;
+
+}
+
+td.color-cell:hover {
+
+    text-decoration: underline;
+
+}
+
+td.color-pick-cell {
+
+    width: 100px;
+    height: 100px;
+
+    cursor: pointer;
+    text-align: center;
+
+    font-size: 0px;
+
+}
+
+td.color-pick-selected {
+
+    border: 2px solid black;
+
+    font-size: initial;
+
+}
+
+td.color-pick-cell:hover {
+
+    border: 2px solid grey;
+
+    font-size: initial;
+
+}
+
+div.effect {
+
+    text-align: right;
+
+}
+
+div.rot90 {
+
+    transform: rotate(90deg);
+    transform-origin: left top 0;
+
+}
+
